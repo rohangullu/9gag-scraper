@@ -157,7 +157,7 @@ class GagUserDetail(APIView):
 
 	def get(self, request, pk, format=None):
 		gUser = self.get_object(pk)
-		serializer = GagUserSerializer(gagUser)
+		serializer = GagUserSerializer(gUser)
 		return Response(serializer.data)
 
 	def put(self, request, pk, format=None):
