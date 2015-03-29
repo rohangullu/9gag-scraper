@@ -19,17 +19,15 @@ class ArticleTagSerializer(serializers.ModelSerializer):
 		validators = [
            		 UniqueTogetherValidator(
           		      queryset=ArticleTag.objects.all(),
-          		      fields=('id','article', 'tag')
+          		      fields=('article', 'tag')
           		  )
        		 ]
 class ArticleSerializer(serializers.ModelSerializer):
+	tags = ArticleTagSerializer(many=True,read_only=True,required=False)
 	class Meta:
 		model = Article
-		tags = ArticleTagSerializer(many=True)
 		fields = ('id','title','contentUrl','points','tags')
-		validators = [
-            		UniqueValidator(queryset=Article.objects.all())
-        	]
+
 
 class TagUserSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -45,9 +43,9 @@ class GagUserSerializer(serializers.ModelSerializer):
 	name = models.CharField(max_length=100,unique=True,validators = [
 			UniqueValidator(queryset=gagUser.objects.all())
 		]) 
+	tags = TagUserSerializer(many=True,read_only=True,required=False)
 	class Meta:
 		model = gagUser
-		tags = TagUserSerializer(many=True)
 		fields = ('id','name','tags')
 
 
